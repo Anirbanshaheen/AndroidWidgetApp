@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        init() // todo
+        init()
     }
 
     private fun init(){
