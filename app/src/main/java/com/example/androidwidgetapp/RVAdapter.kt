@@ -19,25 +19,27 @@ class RVAdapter : RecyclerView.Adapter<RVAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RVAdapter.ViewHolder, position: Int) {
-        with(holder){
-            with(oldList[position]) {
-                binding.root.setOnClickListener { listener?.clickListener(this) }
-                binding.root.setOnLongClickListener {
-                    listener?.longClickListener(this)
-                    true
-                }
-                binding.tvName.text = this
-                binding.tvAge.text = this
+        val item = oldList[position]
+        holder.binding.apply {
+            root.setOnClickListener { listener?.clickListener(item) }
+            root.setOnLongClickListener {
+                listener?.longClickListener(item)
+                true
             }
+            tvName.text = item
+            tvAge.text = item
         }
     }
 
     override fun getItemCount() = oldList.size
 
     fun setData(newList: List<String>) {
-        val diffUtil = RVDiffUtil(oldList, newList)
-        val diffResult = DiffUtil.calculateDiff(diffUtil)
         oldList = newList
-        diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
+
+//        val diffUtil = RVDiffUtil(oldList, newList)
+//        val diffResult = DiffUtil.calculateDiff(diffUtil)
+//        oldList = newList
+//        diffResult.dispatchUpdatesTo(this)
     }
 }
