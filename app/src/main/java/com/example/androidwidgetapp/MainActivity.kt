@@ -13,6 +13,7 @@ import com.example.androidwidgetapp.googleBilling.GoogleBillingActivity
 import com.example.androidwidgetapp.interfaces.GenericInterfaceListener
 import com.example.androidwidgetapp.recyclerView.RecyclerViewActivity
 import com.example.androidwidgetapp.recyclerViewDemo.RecyclerViewDemoActivity
+import com.example.androidwidgetapp.recyclerViewPagination.RVPaginationActivity
 import com.example.androidwidgetapp.recyclerViewViewType.RVViewTypeActivity
 import com.example.androidwidgetapp.recyclerViewViewType.stickyHeaderType.StickHeaderActivity
 import com.example.androidwidgetapp.storyView.StoryActivity
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             "Dialogs",
             "Facebook Story",
             "Recycler View Demo",
-            "Recycler View 11",
+            "Recycler View Pagination",
             "Recycler View 12",
             "Recycler View 13",
             "Recycler View 14",
@@ -69,6 +70,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToDestination(any: String) {
         when(any){
+            // todo 0 task -> basic recycler view
+            // todo 1 task -> for various types recycler view
             "Recycler View" -> { startActivity(Intent(this@MainActivity, RecyclerViewActivity::class.java)) }
             "Google Billing" -> { startActivity(Intent(this@MainActivity, GoogleBillingActivity::class.java)) }
             "Ad" -> { startActivity(Intent(this@MainActivity, AdActivity::class.java)) }
@@ -78,7 +81,9 @@ class MainActivity : AppCompatActivity() {
             "Tab layout" -> { startActivity(Intent(this@MainActivity, TabLayoutActivity::class.java)) }
             "Dialogs" -> { startActivity(Intent(this@MainActivity, BottomSheetDialogActivity::class.java)) }
             "Facebook Story" -> { startActivity(Intent(this@MainActivity, StoryActivity::class.java)) }
+            // todo 2 task -> using nav fragments recycler view
             "Recycler View Demo" -> { startActivity(Intent(this@MainActivity, RecyclerViewDemoActivity::class.java)) }
+            "Recycler View Pagination" -> { startActivity(Intent(this@MainActivity, RVPaginationActivity::class.java)) }
         }
     }
 }

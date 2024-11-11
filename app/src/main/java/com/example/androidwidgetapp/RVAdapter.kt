@@ -1,5 +1,6 @@
 package com.example.androidwidgetapp
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -33,6 +34,7 @@ class RVAdapter : RecyclerView.Adapter<RVAdapter.ViewHolder>() {
 
     override fun getItemCount() = oldList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(newList: List<String>) {
         oldList = newList
         notifyDataSetChanged()
