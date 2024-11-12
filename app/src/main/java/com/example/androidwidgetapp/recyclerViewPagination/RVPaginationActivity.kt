@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.androidwidgetapp.R
 import com.example.androidwidgetapp.databinding.ActivityRvpaginationBinding
 import com.example.androidwidgetapp.recyclerViewPagination.viewModel.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,35 +19,16 @@ import kotlinx.coroutines.launch
 class RVPaginationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRvpaginationBinding
-    private val viewModel: PostViewModel by viewModels()
-    private lateinit var postAdapter: PostAdapter
-
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRvpaginationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        init()
-        observer()
-    }
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerOne) as NavHostFragment
+        navController = navHostFragment.navController
 
-    private fun init() {
-        postAdapter = PostAdapter()
-        binding.rV.layoutManager = LinearLayoutManager(this)
-        binding.rV.adapter = postAdapter
-    }
-
-    private fun observer(){
-        lifecycleScope.launch {
-            viewModel.posts.collectLatest { pagingData ->
-                Log.d("shaheen", "Submitting PagingData to Adapter $pagingData")
-                postAdapter.submitData(pagingData)
-            }
-
-//            viewModel.posts.observe(this@RVPaginationActivity, ) { pagingData ->
-//                Log.d("shaheen", "Submitting PagingData to Adapter")
-//                postAdapter.submitData(lifecycle, pagingData)
-//            }
-        }
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph_sample)
+        navController.graph = navGraph
     }
 }

@@ -2,6 +2,7 @@ package com.example.androidwidgetapp.recyclerViewPagination.model
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Keep
 data class Post(
@@ -13,4 +14,4 @@ data class Post(
     val title: String,
     @SerializedName("body")
     val body: String
-)
+): Serializable

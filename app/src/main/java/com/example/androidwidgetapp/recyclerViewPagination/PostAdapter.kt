@@ -6,9 +6,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidwidgetapp.databinding.ItemPostBinding
+import com.example.androidwidgetapp.recyclerViewDemo.ItemsViewModel
 import com.example.androidwidgetapp.recyclerViewPagination.model.Post
 
 class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallback()) {
+
+    var itemClickListener : ((Post) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,6 +26,10 @@ class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiff
         fun bind(post: Post) {
             binding.titleTextView.text = post.title
             binding.bodyTextView.text = post.body
+
+            binding.root.setOnClickListener {
+                itemClickListener?.invoke(post)
+            }
         }
     }
 }
