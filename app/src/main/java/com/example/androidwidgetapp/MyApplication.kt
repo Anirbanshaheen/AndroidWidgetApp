@@ -16,11 +16,13 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
+import dagger.hilt.android.HiltAndroidApp
 import java.util.Date
 
 val LOG_TAG = "AppOpenAdManager"
 val AD_UNIT_ID = "ca-app-pub-3940256099942544/3419835294"
 
+@HiltAndroidApp
 class MyApplication : Application(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
 
     private var currentActivity: Activity? = null
