@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidwidgetapp.R
 import com.example.androidwidgetapp.databinding.FragmentPaginationOneBinding
@@ -68,16 +69,39 @@ class PaginationFragmentOne : Fragment() {
     }
 
     private fun observer() {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loadingProgressBar.visibility = View.VISIBLE
+            } else {
+                binding.loadingProgressBar.visibility = View.GONE
+            }
+        }
+
         lifecycleScope.launch {
             viewModel.posts.collectLatest { pagingData ->
+                viewModel.setLoading(true)
                 Log.d("shaheen", "Submitting PagingData to Adapter $pagingData")
                 postAdapter.submitData(pagingData)
+                //viewModel.setLoading(true)
             }
 
-//            viewModel.posts.observe(this@RVPaginationActivity, ) { pagingData ->
+            // todo using live data
+//            viewModel.posts.observe(viewLifecycleOwner) { pagingData ->
 //                Log.d("shaheen", "Submitting PagingData to Adapter")
+//                viewModel.setLoading(true)
 //                postAdapter.submitData(lifecycle, pagingData)
+//                viewModel.setLoading(false)
 //            }
+        }
+
+        // todo for showing loading state when using collect latest
+        lifecycleScope.launch {
+            postAdapter.loadStateFlow.collectLatest { loadStates ->
+                viewModel.setLoading(loadStates.source.refresh is LoadState.Loading)
+
+                // todo for scrolling data......
+                binding.loadingProgressBar.visibility = if (loadStates.append is LoadState.Loading) View.VISIBLE else View.GONE
+            }
         }
     }
 
